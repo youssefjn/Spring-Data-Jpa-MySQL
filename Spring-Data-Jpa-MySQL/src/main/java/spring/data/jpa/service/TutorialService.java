@@ -47,10 +47,10 @@ public class TutorialService {
 			_tutorial.setDescription(tutorial.getDescription());
 			if ( tutorial.getPublished() != null )
 			_tutorial.setPublished(tutorial.getPublished());
-				return _tutorial;}
-		else {
-					return tutorial;
+				return _tutorial;
 				}
+		return null;
+				
 		
 	
 	}
