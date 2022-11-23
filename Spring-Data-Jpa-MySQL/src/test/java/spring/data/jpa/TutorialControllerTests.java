@@ -1,8 +1,8 @@
 package spring.data.jpa;
 
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -25,7 +25,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 import spring.data.jpa.model.Tutorial;
-import spring.data.jpa.repository.TutorialRepository;
 import spring.data.jpa.service.TutorialService;
 
 @WebMvcTest 
@@ -85,6 +84,33 @@ public class TutorialControllerTests {
 		        .andExpect(status().isNoContent())
 		        .andDo(print());
 	  }
+	  @Test
+	  void shouldDeleteTutorial() throws Exception {
+	    long id = 1L;
+	   
+	    doNothing().when(tutorialService).deleteTutorial(id);
+	    mockMvc.perform(delete("/api/tutorials/{id}", id))
+	         .andExpect(status().isOk())
+	         .andDo(print());
+	  }
+	  
+	  @Test
+	  void shouldUpdateTutorial() throws Exception {
+		  long id = 1L;
+
+		    Tutorial tutorial = new Tutorial(id, "Spring Boot @WebMvcTest", "Description", false);
+		    Tutorial updatedtutorial = new Tutorial(id, "Updated", "Updated", true);
+		    when(tutorialService.getTutorialById(id)).thenReturn(tutorial);
+		    when(tutorialService.updateTutorial(id, tutorial)).thenReturn(updatedtutorial);
+
+		    mockMvc.perform(put("/api/tutorials/{id}", id).contentType(MediaType.APPLICATION_JSON)
+		        .content(objectMapper.writeValueAsString(updatedtutorial)))
+		        .andExpect(status().isOk())
+		        .andExpect(jsonPath("$.title").value(updatedtutorial.getTitle()))
+		        .andExpect(jsonPath("$.description").value(updatedtutorial.getDescription()))
+		        .andExpect(jsonPath("$.published").value(updatedtutorial.getPublished()))
+		        .andDo(print());
+		  }
 
 
 }
