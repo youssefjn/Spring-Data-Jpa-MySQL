@@ -36,7 +36,7 @@ public class TutorialService {
 		tutorialRepository.deleteById(id);
 	}
 	@Transactional
-	public void updateTutorial (Long id , Tutorial tutorial) {
+	public Tutorial updateTutorial (Long id , Tutorial tutorial) {
 		Optional<Tutorial> tutorialData = Optional.of(tutorialRepository.findById(id).orElseThrow(()-> new IllegalStateException("student with id "+ id + " does not exist")));;
 
 		if (tutorialData.isPresent()) {
@@ -47,7 +47,11 @@ public class TutorialService {
 			_tutorial.setDescription(tutorial.getDescription());
 			if ( tutorial.getPublished() != null )
 			_tutorial.setPublished(tutorial.getPublished());
+				return _tutorial;}
+		else {
+					return tutorial;
 				}
+		
 	
 	}
 

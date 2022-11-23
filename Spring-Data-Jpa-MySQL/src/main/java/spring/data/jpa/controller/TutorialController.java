@@ -77,7 +77,7 @@ public class TutorialController {
 	public ResponseEntity<Tutorial> updateTutorial(@PathVariable ("id") Long id , @RequestBody Tutorial tutorial){
 		try {
 			tutorialService.updateTutorial(id , tutorial);
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(tutorial , HttpStatus.OK);
 		}catch ( Exception e ) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		}
