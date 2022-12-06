@@ -42,7 +42,7 @@ public class TutorialController {
 		}
 	}
 
-	@GetMapping("/tutorials/{id}")
+	@GetMapping("/tutorial/{id}")
 	public ResponseEntity<Tutorial> getTutorialById(@PathVariable ("id") Long id ){
 		try {
 			Tutorial tutorial = tutorialService.getTutorialById(id);
@@ -63,7 +63,7 @@ public class TutorialController {
 		}
 	}
 
-	@DeleteMapping("/tutorials/{id}")
+	@DeleteMapping("/tutorial/{id}")
 	public ResponseEntity<Void> deleteTutorial(@PathVariable ("id") Long id){
 		try {
 			tutorialService.deleteTutorial(id);
@@ -73,7 +73,7 @@ public class TutorialController {
 		}
 	}
 	
-	@PutMapping("/tutorials/{id}")
+	@PutMapping("/tutorial/{id}")
 	public ResponseEntity<Tutorial> updateTutorial(@PathVariable ("id") Long id , @RequestBody Tutorial tutorial){
 		try {
 			tutorialService.updateTutorial(id , tutorial);
