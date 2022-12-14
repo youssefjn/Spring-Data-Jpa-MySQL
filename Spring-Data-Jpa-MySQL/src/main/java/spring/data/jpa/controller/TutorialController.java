@@ -3,7 +3,6 @@ package spring.data.jpa.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,7 +22,6 @@ import spring.data.jpa.service.TutorialService;
 public class TutorialController {
 
 	private TutorialService tutorialService;
-	@Autowired
 	public TutorialController(TutorialService tutorialService) {
 		this.tutorialService = tutorialService;
 	}
