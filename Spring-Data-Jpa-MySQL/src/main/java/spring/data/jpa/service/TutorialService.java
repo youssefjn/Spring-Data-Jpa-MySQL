@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import spring.data.jpa.exception.ResourceNotFoundException;
 import spring.data.jpa.model.Tutorial;
 import spring.data.jpa.repository.TutorialRepository;
 @Service
@@ -26,18 +27,18 @@ public class TutorialService {
 
 	public Tutorial getTutorialById(Long id) {
 		Tutorial tutorial = tutorialRepository.findById(id).orElseThrow(()-> 
-		new IllegalStateException("Tutorial with id "+ id + " does not exist"));
+		new ResourceNotFoundException("Tutorial with id "+ id + " does not exist"));
 		return tutorial;
 	}
 	
 	public void deleteTutorial(Long id) {
 		if ( !tutorialRepository.existsById(id)) {
-			throw new IllegalStateException("id " + id +" doesn't exist");}
+			throw new ResourceNotFoundException("id " + id +" doesn't exist");}
 		tutorialRepository.deleteById(id);
 	}
 	@Transactional
 	public Tutorial updateTutorial (Long id , Tutorial tutorial) {
-		Optional<Tutorial> tutorialData = Optional.of(tutorialRepository.findById(id).orElseThrow(()-> new IllegalStateException("student with id "+ id + " does not exist")));;
+		Optional<Tutorial> tutorialData = Optional.of(tutorialRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("student with id "+ id + " does not exist")));;
 
 		if (tutorialData.isPresent()) {
 			Tutorial _tutorial = tutorialData.get();
