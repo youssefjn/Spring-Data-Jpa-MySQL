@@ -53,7 +53,7 @@ public class TutorialControllerTests {
 		Long id = 1L;
 		Tutorial tutorial = new Tutorial(id, "Spring Boot @WebMvcTest", "Description", true);
 		when(tutorialService.getTutorialById(id)).thenReturn(tutorial);
-		mockMvc.perform(get("/api/tutorials/{id}", id)).andExpect(status().isOk())
+		mockMvc.perform(get("/api/tutorial/{id}", id)).andExpect(status().isOk())
 		.andExpect(jsonPath("$.id").value(id))
 		.andExpect(jsonPath("$.title").value(tutorial.getTitle()))
 		.andExpect(jsonPath("$.description").value(tutorial.getDescription()))
@@ -89,7 +89,7 @@ public class TutorialControllerTests {
 	    long id = 1L;
 	   
 	    doNothing().when(tutorialService).deleteTutorial(id);
-	    mockMvc.perform(delete("/api/tutorials/{id}", id))
+	    mockMvc.perform(delete("/api/tutorial/{id}", id))
 	         .andExpect(status().isOk())
 	         .andDo(print());
 	  }
@@ -103,7 +103,7 @@ public class TutorialControllerTests {
 		    when(tutorialService.getTutorialById(id)).thenReturn(tutorial);
 		    when(tutorialService.updateTutorial(id, tutorial)).thenReturn(updatedtutorial);
 
-		    mockMvc.perform(put("/api/tutorials/{id}", id).contentType(MediaType.APPLICATION_JSON)
+		    mockMvc.perform(put("/api/tutorial/{id}", id).contentType(MediaType.APPLICATION_JSON)
 		        .content(objectMapper.writeValueAsString(updatedtutorial)))
 		        .andExpect(status().isOk())
 		        .andExpect(jsonPath("$.title").value(updatedtutorial.getTitle()))
